@@ -1,0 +1,40 @@
+import sys
+
+def calcular_metricas(matriz):
+    vp, fp, fn, vn = map(int, matriz)
+    acuracia = (vp + vn) / (vp + fp + fn + vn)
+    precisao = vp / (vp + fp) if (vp + fp) != 0 else 0
+    return acuracia, precisao
+
+def melhor_matriz(matrizes):
+    melhor_indice = 0
+    melhor_acuracia = 0
+    melhor_precisao = 0
+
+    for i, matriz in enumerate(matrizes):
+        acuracia, precisao = calcular_metricas(matriz)
+        if (acuracia > melhor_acuracia) or (acuracia == melhor_acuracia and precisao > melhor_precisao):
+            melhor_indice = i
+            melhor_acuracia = acuracia
+            melhor_precisao = precisao
+
+    return melhor_indice, melhor_acuracia, melhor_precisao
+
+entrada = sys.stdin.read().strip().split('\n')
+n = int(entrada[0])
+matrizes = [list(map(int, linha.split(','))) for linha in entrada[1:]]
+
+indice, acuracia, precisao = melhor_matriz(matrizes)
+
+print(f"Índice: {indice + 1}")
+
+def formatar_valor(valor):
+    if valor == int(valor):
+        return f"{valor:.1f}"
+    return f"{valor:.2f}".rstrip('0').rstrip('.')
+
+acuracia_formatada = formatar_valor(acuracia)
+precisao_formatada = formatar_valor(precisao)
+
+print(f"Acurácia: {acuracia_formatada}")
+print(f"Precisão: {precisao_formatada}")

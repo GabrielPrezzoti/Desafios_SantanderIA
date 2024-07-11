@@ -1,0 +1,32 @@
+cogumelo_desejado = input()
+
+def sugerir_cogumelos(cogumelo_desejado):
+    catalogo = {
+        "Shitake": 10,
+        "Portobello": 8,
+        "Shimeji": 6,
+        "Champignon": 12,
+        "Funghi": 16,
+        "Porcini": 16
+    }
+
+    if cogumelo_desejado in catalogo:
+        valor_desejado = catalogo[cogumelo_desejado]
+        
+        sugestoes = []
+
+        for cogumelo, valor in catalogo.items():
+            if valor <= valor_desejado and cogumelo != cogumelo_desejado:
+                sugestoes.append((cogumelo, valor)) 
+                if len(sugestoes) == 2:
+                    break
+        
+        if not sugestoes:
+            print("Desculpe, não há sugestões disponíveis.")
+        else:
+            for sugestao, valor_sugestao in sugestoes:
+                print(f"{sugestao} - Valor: {valor_sugestao}")
+    else:
+        print("Cogumelo não encontrado no catálogo.")
+
+sugerir_cogumelos(cogumelo_desejado)
